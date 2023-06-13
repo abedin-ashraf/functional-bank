@@ -20,6 +20,21 @@ function getInputValue(inputId) {
     input.value = '';
     return value;
 }
+function getAndUpdate(inputId, value) {
+    const total = document.getElementById(inputId);
+    const totalText = total.innerText;
+
+    total.innerText = parseFloat(totalText) + parseFloat(value);
+    return total.innerText;
+}
+
+function update(inputId, value) {
+    const total = document.getElementById(inputId);
+    const totalText = total.innerText;
+
+    total.innerText = parseFloat(totalText) - parseFloat(value);
+    return total.innerText;
+}
 
 document.getElementById('deposit-btn').addEventListener('click', function () {
     /*
@@ -30,11 +45,13 @@ document.getElementById('deposit-btn').addEventListener('click', function () {
     const depositValue = getInputValue('deposit-input');
     //get current deposit
 
-    const depositTotal = document.getElementById('total-deposit');
-    const depositTotalText = depositTotal.innerText;
+    /*
+const depositTotal = document.getElementById('total-deposit');
+const depositTotalText = depositTotal.innerText;
 
-    depositTotal.innerText = parseFloat(depositTotalText) + parseFloat(depositValue);
-
+depositTotal.innerText = parseFloat(depositTotalText) + parseFloat(depositValue);
+*/
+    getAndUpdate('total-deposit', depositValue);
     // console.log(depositTotalText);
 
 
@@ -48,20 +65,25 @@ document.getElementById('deposit-btn').addEventListener('click', function () {
 
 document.getElementById('withdraw-btn').addEventListener('click', function () {
     /*
-// const withdrawInput = document.getElementById('withdraw-input');
+    // const withdrawInput = document.getElementById('withdraw-input');
     // const withdrawInputValue = withdrawInput.value;
     // // console.log(withdrawInputValue);
     */
-
     const withdrawInputValue = getInputValue('withdraw-input');
-    const totalWithdraw = document.getElementById('total-withdraw');
-    const totalWithdrawText = totalWithdraw.innerText;
 
-    totalWithdraw.innerText = parseFloat(withdrawInputValue) + parseFloat(totalWithdrawText);
+    /*
+        const totalWithdraw = document.getElementById('total-withdraw');
+        const totalWithdrawText = totalWithdraw.innerText;
+    
+        totalWithdraw.innerText = parseFloat(withdrawInputValue) + parseFloat(totalWithdrawText);
+    */
+    const totalWithdraw = getAndUpdate('total-withdraw', withdrawInputValue);
 
-    const totalBalance = document.getElementById('total-balance');
-    const totalBalanceText = totalBalance.innerText;
-
-    totalBalance.innerText = parseFloat(totalBalanceText) - parseFloat(withdrawInputValue);
+    /* const totalBalance = document.getElementById('total-balance');
+     const totalBalanceText = totalBalance.innerText;
+ 
+     totalBalance.innerText = parseFloat(totalBalanceText) - parseFloat(withdrawInputValue);
+ */
+    update('total-balance', totalWithdraw);
 
 })
