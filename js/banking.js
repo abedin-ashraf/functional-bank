@@ -36,6 +36,13 @@ function update(inputId, value) {
     return total.innerText;
 }
 
+function getCurrentBalance() {
+    const totalBalance = document.getElementById('total-balance');
+    const totalBalanceText = totalBalance.innerText;
+    const balanceTotal = parseFloat(totalBalanceText);
+    return balanceTotal;
+}
+
 document.getElementById('deposit-btn').addEventListener('click', function () {
     /*
     // const depositInput = document.getElementById('deposit-input');
@@ -51,15 +58,23 @@ const depositTotalText = depositTotal.innerText;
 
 depositTotal.innerText = parseFloat(depositTotalText) + parseFloat(depositValue);
 */
-    getAndUpdate('total-deposit', depositValue);
+
     // console.log(depositTotalText);
 
 
     //Total
+    /*
     const totalBalance = document.getElementById('total-balance');
     const totalBalanceText = totalBalance.innerText;
 
     totalBalance.innerText = parseFloat(totalBalanceText) + parseFloat(depositValue);
+*/
+    if (depositValue > 0) {
+        const totalValue = getAndUpdate('total-deposit', depositValue);
+        getAndUpdate('total-balance', depositValue);
+    }
+
+
 
 })
 
@@ -77,13 +92,18 @@ document.getElementById('withdraw-btn').addEventListener('click', function () {
     
         totalWithdraw.innerText = parseFloat(withdrawInputValue) + parseFloat(totalWithdrawText);
     */
-    const totalWithdraw = getAndUpdate('total-withdraw', withdrawInputValue);
+
 
     /* const totalBalance = document.getElementById('total-balance');
      const totalBalanceText = totalBalance.innerText;
  
      totalBalance.innerText = parseFloat(totalBalanceText) - parseFloat(withdrawInputValue);
  */
-    update('total-balance', totalWithdraw);
+
+    const previousBalanceTotal = getCurrentBalance();
+    if (withdrawInputValue > 0 && withdrawInputValue < previousBalanceTotal) {
+        const totalWithdraw = getAndUpdate('total-withdraw', withdrawInputValue);
+        update('total-balance', totalWithdraw);
+    }
 
 })
